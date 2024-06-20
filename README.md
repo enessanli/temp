@@ -1,5 +1,61 @@
+# Table of Contents
+
+1. [Introduction and Motivation](#1-introduction-and-motivation)
+   - [What are Latent Variable Models (LVMs)?](#what-are-latent-variable-models-lvms)
+   - [Importance and Applications in Machine Learning and Statistics](#importance-and-applications-in-machine-learning-and-statistics)
+   - [Motivation Behind Using Latent Variable Models](#motivation-behind-using-latent-variable-models)
+
+2. [Mixture Models](#2-mixture-models)
+   - [Mixture of Gaussians: A Shallow Latent Variable Model](#21-mixture-of-gaussians-a-shallow-latent-variable-model)
+     - [Generative Process](#generative-process)
+     - [Use Cases](#use-cases)
+     - [Advantages](#advantages)
+   - [Variational Autoencoders (VAEs)](#22-variational-autoencoders-vaes)
+     - [VAEs as a Generative Model](#vaes-as-a-generative-model)
+     - [Difference Between Deterministic and Stochastic Latent Representations](#difference-between-deterministic-and-stochastic-latent-representations)
+
+3. [Inference and Marginal Probability](#3-inference-and-marginal-probability)
+   - [Marginal Likelihood](#31-marginal-likelihood)
+     - [Importance of Marginal Likelihood in Variational Probabilistic Modeling](#importance-of-marginal-likelihood-in-variational-probabilistic-modeling)
+   - [Sampling Techniques](#32-sampling-techniques)
+     - [Naive Monte Carlo](#naive-monte-carlo)
+     - [Importance Sampling](#importance-sampling)
+   - [Evidence Lower Bound (ELBO)](#33-evidence-lower-bound-elbo)
+     - [Introduction to ELBO as an Objective Function in VAEs](#introduction-to-elbo-as-an-objective-function-in-vaes)
+     - [ELBO’s Role in Variational Inference and Model Training](#elbos-role-in-variational-inference-and-model-training)
+
+4. [Learning Latent Variable Models](#4-learning-latent-variable-models)
+   - [Learning via Stochastic Variational Inference (SVI)](#41-learning-via-stochastic-variational-inference-svi)
+     - [Optimization Objective](#optimization-objective)
+     - [Likelihood Function](#likelihood-function)
+     - [Optimization Steps](#optimization-steps)
+     - [Gradient Computation](#gradient-computation)
+     - [Key Assumption](#key-assumption)
+   - [Reparameterization Trick](#42-reparameterization-trick)
+     - [Gradient Computation Objective](#gradient-computation-objective)
+     - [Equivalence in Sampling](#equivalence-in-sampling)
+     - [Gradient Estimation](#gradient-estimation)
+     - [Practical Implementation](#practical-implementation)
+     - [Efficient Computation](#this-technique-enables-efficient-computation-of-gradients-with-respect-to-the-variational-parameters-phi-thereby-facilitating-the-optimization-of-latent-variable-models)
+   - [Amortized Inference](#43-amortized-inference)
+     - [Amortization](#amortization)
+     - [Learning with Amortized Inference](#43-learning-with-amortized-inference)
+     - [Optimization Steps](#optimization-steps)
+
+5. [Autoencoder Perspective](#5-autoencoder-perspective)
+   - [Comparing VAE with Traditional Autoencoders](#51-comparing-vae-with-traditional-autoencoders)
+     - [Contrast Between VAEs and Standard Autoencoders in Representation Learning](#contrast-between-vaes-and-standard-autoencoders-in-representation-learning)
+     - [VAE vs. AE](#vae-vs-ae)
+
+6. [Conclusion](#6-conclusion)
+   - [Summary of Key Concepts Covered in the Discussion of Latent Variable Models](#summary-of-key-concepts-covered-in-the-discussion-of-latent-variable-models)
+   - [Pros and Cons of Latent Variable Models](#pros-and-cons-of-latent-variable-models)
+
+7. [Acknowledgements](#acknowledgements)
+
+
 # Latent Variable Models & Variational Inference
-Topic Summary for CENG796 by Enes Şanlı &amp; Hamza Etcibaşı
+Topic Summary for CENG796 by Enes Şanlı &amp; Hamza Etcibaşı. Prepared as an activity of the [Middle East Technical University - CENG 796 Deep Generative Models course](<https://user.ceng.metu.edu.tr/~gcinbis/courses/Spring24/CENG796/index.html>).
 
 # 1. Introduction and Motivation
 ## What are Latent Variable Models (LVMs)?
@@ -141,7 +197,7 @@ Suppose we are working with an image during the training phase where the pixel v
 
 <div align="center">
     <img src="images/048.png" alt="Fig 5. Figure" title="Fig 5. Figure Marginal Likelihood" width="40%">
-    <p>Fig 5. Figure Marginal Likelihood</p>
+    <p>Fig 5. Marginal Likelihood</p>
 </div>
 
 Can we determine the value of $P(X=x;θ)$ in this manner?  
@@ -234,9 +290,10 @@ $$\log (E_{z \sim q(z)}[\frac{p_{θ}(x,z)}{q(z)}])  \geq (E_{z \sim q(z)}[\log (
 
 When we look at this equation, the first term will not change; it always equals $p_{θ}(x,z)$. The value of $q(z)$ is not important; it will not change anything. And we know that finding first term is not tractable, so instead of that if we try to maximize second term we can approximate the first term because it behaves like a constant.
 
-<p align="center">
+<div align="center">
   <img src="images/049.png" alt="Fig 6. Evidence Lower Bound" title="Fig 6. Evidence Lower Bound" width="70%">
-</p>
+  <p>Fig 6. Evidence Lower Bound</p>
+</div>
 
 Like in this figure, we try to maximize second term, and because of first term behaves like a constant we can minimize the difference between actual $p_{θ}(x,z)$ and approximated $p_{θ}(x,z)$
 
@@ -303,9 +360,10 @@ $\log (p(x)) = ELBO + KL[q(z) || p(z|x)]$
 
 So, using KL divergence we can simply calculate the error of our $q(z)$
 
-<p align="center">
+<div align="center">
   <img src="images/049.png" alt="Fig 7. Evidence Lower Bound" title="Fig 7. Evidence Lower Bound" width="70%">
-</p>
+  <p>Fig 7. Evidence Lower Bound</p>
+</div>
 
 Now, if we look at the figure we mentioned earlier, and the equation we found lastly: $\log (p(x)) = ELBO + KL[q(z) || p(z|x)]$, we can find a way for finding good $q(z)$. In the figure, the blue line represents our ELBO, while the red line represents our $\log (p(x))$ value. The difference between them gives us KL divergence. However, the KL divergence is not tractable, and as we mentioned earlier, the $p(x)$ value is constant. Therefore, instead of minimizing the KL divergence, if we try to maximize the ELBO value, we will achieve the same result—minimizing the KL divergence and thus approximating our $p(x)$ value.
 
@@ -368,9 +426,10 @@ Let's assume $q(z; \phi) = \mathcal{N}(\mu, \sigma^2 I)$ is Gaussian with parame
 Thus, we compute the expectation by integrating over $\epsilon$ after transforming into $z$ using $g(\epsilon; \phi)$.
 
 We illustrate the idea in Figure 8. in 1-D case, and the trick works in multi-dimensional case as well:
-<p align="center">
+<div align="center">
   <img src="images/reparam_trick.png" alt="Fig 8. Reparametrization Trick" title="Fig 8. Reparametrization Trick" width="80%">
-</p>
+  <p>Fig 8. Reparametrization Trick</p>
+</div>
 
 
 ### Gradient Estimation
@@ -399,9 +458,10 @@ For instance, if $q(z|x_i)$ are Gaussians with different means $\mu_1, \cdots, \
 Amortized inference thus scales efficiently to large datasets by sharing parameters across all data points through the learned function $f_\lambda$.
 
 We visualize the process showing the differences between with/without amortization below:
-<p align="center">
+<div align="center">
   <img src="images/amortization.png" alt="Fig 9. With/Without Amortization" title="Fig 9. With/Without Amortization" width="35%">
-</p>
+  <p>Fig 9. With/Without Amortization</p>
+</div>
 
 ## 4.3 Learning with Amortized Inference
 
@@ -428,9 +488,10 @@ This approach leverages amortized inference to efficiently optimize the model pa
 ## 5.1 Comparing VAE with Traditional Autoencoders
 ### Contrast Between VAEs and Standard Autoencoders in Representation Learning
 In a standard autoencoder, the architecture involves an encoder that maps input images $x$ to a latent space representation $z$, followed by a decoder that reconstructs the input image. This setup aims to minimize the reconstruction error between the original input and the reconstructed output. We illustrate the autoencoder architecture below:
-<p align="center">
+<div align="center">
   <img src="images/ae.png" alt="Fig 10. Autoencoder Architecture" title="Fig 10. Autoencoder Architecture" width="60%">
-</p>
+  <p>Fig 10. Autoencoder Architecture</p>
+</div>
 
 In contrast, a Variational Autoencoder (VAE) incorporates probabilistic principles into the autoencoder framework. The VAE introduces a recognition network (variational encoder) and a generator network (variational decoder). Here's how it works:
 
@@ -447,9 +508,10 @@ In contrast, a Variational Autoencoder (VAE) incorporates probabilistic principl
    - Using the reparameterization trick, $z$ is sampled from the inferred distribution.
    - $z$ is then fed into the generator (decoder network) to generate $\hat{x}$.
 
-<p align="center">
+<div align="center">
   <img src="images/vae.png" alt="Fig 11. Variational Autoencoder" title="Fig 11. Variational Autoencoder" width="60%">
-</p>
+  <p>Fig 11. Variational Autoencoder</p>
+</div>
 
 ### VAE vs. AE
   - **Latent Space:** VAE explicitly models the distribution of latent variables, enabling meaningful interpolation and sampling. AE typically lacks such structure.
