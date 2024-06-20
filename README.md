@@ -4,11 +4,12 @@ Topic Summary for CENG796 by Enes Şanlı &amp; Hamza Etcibaşı
 # 1. Introduction and Motivation
 ## What are Latent Variable Models (LVMs)?
 Latent Variable Models (LVMs) are statistical models that include variables that are not directly observed but are inferred from other variables that are observed (measured). These unobserved variables are termed "latent variables." LVMs are used to model complex phenomena where the observed data is believed to be generated from underlying factors that are not directly measurable.  
-In terms of a mathematical explanation, Latent Variable Models aim to obtain the observed data $X$ by utilizing the latent variables $Z$. This is because directly finding $P(X)$ is more challenging compared to finding $P(X∣Z)$. Hence, LVMs generally exploit the following equality: $P(X)=P(X∣Z)⋅P(Z)$
+In terms of a mathematical explanation, Latent Variable Models aim to obtain the observed data $X$ by utilizing the latent variables $Z$. This is because directly finding $P(X)$ is more challenging compared to finding $P(X∣Z)$. Hence, LVMs generally exploit the following equality: $P(X)=P(X∣Z)P(Z)$
 
-<p align="center">
+<div align="center">
   <img src="images/047.png" alt="Fig 1. Latent Variables" title="Fig 1. Latent Variables" width="60%">
-</p>
+  <p>Fig 1. Latent Variables</p>
+</div>
 
 ## Importance and Applications in Machine Learning and Statistics
 LVMs play a crucial role in various fields within machine learning and statistics due to their ability to model complex and high-dimensional data in a more interpretable and compact form. Some key applications include:
@@ -20,9 +21,10 @@ LVMs play a crucial role in various fields within machine learning and statistic
  
 ## Motivation Behind Using Latent Variable Models
 
-<p align="center">
+<div align="center">
   <img src="images/img1.png" alt="Fig 2. Latent Variables Models" title="Fig 2. Latent Variables Models" width="60%">
-</p>
+  <p>Fig 2. Latent Variables Models</p>
+</div>
 
 Like in Fig 2. suppose we want to generate an image of a dog. We know that dogs have certain features, such as color, breed, and size. However, can we limit these features? Or can we identify every feature for each image? The answer to this question is of course no. A single image can have an infinite number of latent features, and it is impossible for us to identify all of them accurately. However, if we can learn the most important of these features, we can use them to generate images much more easily. This is because estimating probability distributions based on an image's features is much easier than estimating from a complete probability distribution. This logic is the motivation behind Latent Variable Models. 
 <br/><br/>
@@ -37,9 +39,10 @@ Here:
 - \(z\) is the latent variable.
 - \(x\) is the observed data.
 
-<p align="center">
+<div align="center">
   <img src="images/mog.png" alt="Fig 3. Mixture of Gaussians" title="Fig 3. Mixture of Gaussians" width="37%">
-</p>
+  <p>Fig 3. Mixture of Gaussians</p>
+</div>
 
 #### Generative Process
 
@@ -56,9 +59,10 @@ Here:
    </p>
 
 When training a Mixture of Gaussians model, we start with like a single Gaussian fit. As training progresses, assuming the distribution isn't too complex and we have a good estimate for the number of clusters, the model performs effective clustering. Similar points end up with similar z estimates, resulting in soft clustering. This approach is also useful in unsupervised learning. The approach is illustrated in Fig 4. below:
-<p align="center">
+<div align="center">
   <img src="images/mog2.png" alt="Fig 4. Mixture of 3 Gaussians" title="Fig 4. Mixture of 3 Gaussians" width="70%">
-</p>
+  <p>Fig 4. Mixture of 3 Gaussians</p>
+</div>
 
 By following these steps, the Mixture of Gaussians model generates data points that can represent complex, multimodal distributions through the combination of multiple Gaussian components.
 
@@ -135,9 +139,10 @@ Here, $z$ represents the stochastic latent representation sampled from the distr
 
 Suppose we are working with an image during the training phase where the pixel values in the upper half are missing, and our goal is to reconstruct the original image. Let $X$ be our observed random variables, and $Z$ be our unobserved random variables. We have a joint model that utilizes these $Z$. We can express this model as $P(X,Z;θ)$, where $X$ represents the observed variables, $Z$ represents the unobserved random variables, and $θ$ denotes the weights of our model.  
 
-<p align="center">
+<div align="center">
     <img src="images/048.png" alt="Fig 5. Figure" title="Fig 5. Figure Marginal Likelihood" width="40%">
-</p>
+    <p>Fig 5. Figure Marginal Likelihood</p>
+</div>
 
 Can we determine the value of $P(X=x;θ)$ in this manner?  
 Mathematically, yes, we can. However, the process to find this can be expressed as follows: $\sum_{z}P(X=x,Z=z;θ)$, meaning we need to perform this operation for all possible values of $Z$. While this is theoretically possible, it is practically infeasible. This is because, even for a binary image, there are $2^Z$ possible states.
@@ -212,7 +217,7 @@ With this, we now have an additional feature. We know that the logarithm is a co
 
 First, let's recall Jensen's Inequality. For concave functions, 
 <p align="center">
-$$\log ( t*x_1 + (1-t)*x_2) \geq t* \log (x_1) + (1-t)* \log (x_2)$$
+$$\log ( tx_1 + (1-t)x_2) \geq t \log (x_1) + (1-t) \log (x_2)$$
 </p>
 
 Now, let's apply this to our equation.
