@@ -36,7 +36,6 @@
      - [Equivalence in Sampling](#equivalence-in-sampling)
      - [Gradient Estimation](#gradient-estimation)
      - [Practical Implementation](#practical-implementation)
-     - [Efficient Computation](#this-technique-enables-efficient-computation-of-gradients-with-respect-to-the-variational-parameters-phi-thereby-facilitating-the-optimization-of-latent-variable-models)
    - [Amortized Inference](#43-amortized-inference)
      - [Amortization](#amortization)
      - [Learning with Amortized Inference](#43-learning-with-amortized-inference)
@@ -63,7 +62,7 @@ Latent Variable Models (LVMs) are statistical models that include variables that
 In terms of a mathematical explanation, Latent Variable Models aim to obtain the observed data $X$ by utilizing the latent variables $Z$. This is because directly finding $P(X)$ is more challenging compared to finding $P(X∣Z)$. Hence, LVMs generally exploit the following equality: $P(X)=P(X∣Z)P(Z)$
 
 <div align="center">
-  <img src="images/047.png" alt="Fig 1. Latent Variables" title="Fig 1. Latent Variables" width="60%">
+  <img src="./images/047.png" alt="Fig 1. Latent Variables" title="Fig 1. Latent Variables" width="60%">
   <p>Fig 1. Latent Variables</p>
 </div>
 
@@ -78,7 +77,7 @@ LVMs play a crucial role in various fields within machine learning and statistic
 ## Motivation Behind Using Latent Variable Models
 
 <div align="center">
-  <img src="images/img1.png" alt="Fig 2. Latent Variables Models" title="Fig 2. Latent Variables Models" width="60%">
+  <img src="./images/img1.png" alt="Fig 2. Latent Variables Models" title="Fig 2. Latent Variables Models" width="60%">
   <p>Fig 2. Latent Variables Models</p>
 </div>
 
@@ -96,7 +95,7 @@ Here:
 - \(x\) is the observed data.
 
 <div align="center">
-  <img src="images/mog.png" alt="Fig 3. Mixture of Gaussians" title="Fig 3. Mixture of Gaussians" width="37%">
+  <img src="./images/mog.png" alt="Fig 3. Mixture of Gaussians" title="Fig 3. Mixture of Gaussians" width="37%">
   <p>Fig 3. Mixture of Gaussians</p>
 </div>
 
@@ -116,7 +115,7 @@ Here:
 
 When training a Mixture of Gaussians model, we start with like a single Gaussian fit. As training progresses, assuming the distribution isn't too complex and we have a good estimate for the number of clusters, the model performs effective clustering. Similar points end up with similar z estimates, resulting in soft clustering. This approach is also useful in unsupervised learning. The approach is illustrated in Fig 4. below:
 <div align="center">
-  <img src="images/mog2.png" alt="Fig 4. Mixture of 3 Gaussians" title="Fig 4. Mixture of 3 Gaussians" width="70%">
+  <img src="./images/mog2.png" alt="Fig 4. Mixture of 3 Gaussians" title="Fig 4. Mixture of 3 Gaussians" width="70%">
   <p>Fig 4. Mixture of 3 Gaussians</p>
 </div>
 
@@ -196,7 +195,7 @@ Here, $z$ represents the stochastic latent representation sampled from the distr
 Suppose we are working with an image during the training phase where the pixel values in the upper half are missing, and our goal is to reconstruct the original image. Let $X$ be our observed random variables, and $Z$ be our unobserved random variables. We have a joint model that utilizes these $Z$. We can express this model as $P(X,Z;θ)$, where $X$ represents the observed variables, $Z$ represents the unobserved random variables, and $θ$ denotes the weights of our model.  
 
 <div align="center">
-    <img src="images/048.png" alt="Fig 5. Figure" title="Fig 5. Figure Marginal Likelihood" width="40%">
+    <img src="./images/048.png" alt="Fig 5. Figure" title="Fig 5. Figure Marginal Likelihood" width="40%">
     <p>Fig 5. Marginal Likelihood</p>
 </div>
 
@@ -291,7 +290,7 @@ $$\log (E_{z \sim q(z)}[\frac{p_{θ}(x,z)}{q(z)}])  \geq (E_{z \sim q(z)}[\log (
 When we look at this equation, the first term will not change; it always equals $p_{θ}(x,z)$. The value of $q(z)$ is not important; it will not change anything. And we know that finding first term is not tractable, so instead of that if we try to maximize second term we can approximate the first term because it behaves like a constant.
 
 <div align="center">
-  <img src="images/049.png" alt="Fig 6. Evidence Lower Bound" title="Fig 6. Evidence Lower Bound" width="70%">
+  <img src="./images/049.png" alt="Fig 6. Evidence Lower Bound" title="Fig 6. Evidence Lower Bound" width="70%">
   <p>Fig 6. Evidence Lower Bound</p>
 </div>
 
@@ -361,7 +360,7 @@ $\log (p(x)) = ELBO + KL[q(z) || p(z|x)]$
 So, using KL divergence we can simply calculate the error of our $q(z)$
 
 <div align="center">
-  <img src="images/049.png" alt="Fig 7. Evidence Lower Bound" title="Fig 7. Evidence Lower Bound" width="70%">
+  <img src="./images/049.png" alt="Fig 7. Evidence Lower Bound" title="Fig 7. Evidence Lower Bound" width="70%">
   <p>Fig 7. Evidence Lower Bound</p>
 </div>
 
@@ -427,7 +426,7 @@ Thus, we compute the expectation by integrating over $\epsilon$ after transformi
 
 We illustrate the idea in Figure 8. in 1-D case, and the trick works in multi-dimensional case as well:
 <div align="center">
-  <img src="images/reparam_trick.png" alt="Fig 8. Reparametrization Trick" title="Fig 8. Reparametrization Trick" width="80%">
+  <img src="./images/reparam_trick.png" alt="Fig 8. Reparametrization Trick" title="Fig 8. Reparametrization Trick" width="80%">
   <p>Fig 8. Reparametrization Trick</p>
 </div>
 
@@ -459,7 +458,7 @@ Amortized inference thus scales efficiently to large datasets by sharing paramet
 
 We visualize the process showing the differences between with/without amortization below:
 <div align="center">
-  <img src="images/amortization.png" alt="Fig 9. With/Without Amortization" title="Fig 9. With/Without Amortization" width="35%">
+  <img src="./images/amortization.png" alt="Fig 9. With/Without Amortization" title="Fig 9. With/Without Amortization" width="35%">
   <p>Fig 9. With/Without Amortization</p>
 </div>
 
@@ -489,7 +488,7 @@ This approach leverages amortized inference to efficiently optimize the model pa
 ### Contrast Between VAEs and Standard Autoencoders in Representation Learning
 In a standard autoencoder, the architecture involves an encoder that maps input images $x$ to a latent space representation $z$, followed by a decoder that reconstructs the input image. This setup aims to minimize the reconstruction error between the original input and the reconstructed output. We illustrate the autoencoder architecture below:
 <div align="center">
-  <img src="images/ae.png" alt="Fig 10. Autoencoder Architecture" title="Fig 10. Autoencoder Architecture" width="60%">
+  <img src="./images/ae.png" alt="Fig 10. Autoencoder Architecture" title="Fig 10. Autoencoder Architecture" width="60%">
   <p>Fig 10. Autoencoder Architecture</p>
 </div>
 
@@ -509,7 +508,7 @@ In contrast, a Variational Autoencoder (VAE) incorporates probabilistic principl
    - $z$ is then fed into the generator (decoder network) to generate $\hat{x}$.
 
 <div align="center">
-  <img src="images/vae.png" alt="Fig 11. Variational Autoencoder" title="Fig 11. Variational Autoencoder" width="60%">
+  <img src="./images/vae.png" alt="Fig 11. Variational Autoencoder" title="Fig 11. Variational Autoencoder" width="60%">
   <p>Fig 11. Variational Autoencoder</p>
 </div>
 
